@@ -1,0 +1,51 @@
+{% extends 'components/base.html' %}
+{% load static %}
+{% block title %}Homepage{% endblock %}
+
+<!-- block content to fit into the base -->
+{% block content %}
+
+<h4>Task List</h4><hr>
+
+<div class="border p-3">
+    <p>Add a new task</p>
+    <form action="addtask/" method="POST">
+        {% csrf_token %}
+        {{form}} 
+        <!-- <input class="pl-3" type="text" name="add_task" placeholder="Add a new task here" style="outline:none;"> -->
+        <input class="btn btn-dark btn-block mt-3" type="submit">
+    </form>
+</div>
+{% for todo in current_todos %}
+<div class="border p-3 mb-3 mt-3">
+    <small>{{todo.date_time}}</small>
+    <div class="row">
+        <div class="col-md-4 col-lg-6">
+            <p>{{todo.title}}</p>
+            <!-- <input type="checkbox" class="checkbox mr-1"><small>Complete</small> -->
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-dark">
+                    <a href="{% url 'todo_edit' todo.id %}" class="text-white"><input type="radio" name="options" id="option3" autocomplete="off"> Edit</a>
+                </label>
+                <label class="btn btn-danger">
+                    <a href="{% url 'todo_delete' todo.id %}" class="text-white"><input type="radio" name="options" id="option3" autocomplete="off"> Delete</a>
+                </label>
+                <label class="btn btn-dark">
+                    <a href="{% url 'todo_close' todo.id %}" class="text-white"><input type="radio" name="options" id="option3" autocomplete="off"> Close</a>
+                </label>
+            </div>
+            <!-- <a href="" class="btn btn-primary btn small">Edit</a>
+            <a href="" class="btn btn-danger btn small">Delete</a> -->
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!-- style="background-color:rgba(14, 62, 68, 0.788) -->
+
+
+
+{% endblock %}
+
+
